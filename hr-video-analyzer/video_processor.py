@@ -1,6 +1,35 @@
-import cv2
 import os
 import json
+
+# OpenCV is required for video processing
+try:
+    import cv2
+    CV2_AVAILABLE = True
+except ImportError:
+    CV2_AVAILABLE = False
+    cv2 = None
+    print("ERROR: OpenCV (cv2) is required but not installed.")
+    print("Install with: pip install opencv-python")
+
+# Optional imports for transcription and evaluation
+try:
+    import audio_transcriber
+    import candidate_evaluator
+    TRANSCRIPTION_AVAILABLE = True
+except ImportError as e:
+    print(f"Warning: Transcription features not available: {e}")
+    TRANSCRIPTION_AVAILABLE = False
+    audio_transcriber = None
+    candidate_evaluator = None
+
+# Import facial expression analyzer
+try:
+    import facial_expression_analyzer
+    FACIAL_ANALYSIS_AVAILABLE = True
+except ImportError as e:
+    print(f"Warning: Facial expression analysis module not available: {e}")
+    FACIAL_ANALYSIS_AVAILABLE = False
+    facial_expression_analyzer = None
 
 
 def extract_frames(video_path, out_folder="frames", step=30):
@@ -8,6 +37,9 @@ def extract_frames(video_path, out_folder="frames", step=30):
 
     Returns the number of saved frames and the output folder path.
     """
+    if not CV2_AVAILABLE:
+        raise ImportError("OpenCV (cv2) is required for video processing. Install with: pip install opencv-python")
+    
     os.makedirs(out_folder, exist_ok=True)
     cap = cv2.VideoCapture(video_path)
     frame_num = 0
@@ -32,6 +64,9 @@ def analyze_frames(frames_folder, annotated_folder="annotated", cascade_path=Non
     Uses OpenCV's Haarcascade frontal face detector by default. Returns a dict
     mapping frame filename -> list of detected bounding boxes.
     """
+    if not CV2_AVAILABLE:
+        raise ImportError("OpenCV (cv2) is required for face detection. Install with: pip install opencv-python")
+    
     os.makedirs(annotated_folder, exist_ok=True)
     if cascade_path is None:
         cascade_path = os.path.join(cv2.data.haarcascades, 'haarcascade_frontalface_default.xml')
@@ -61,8 +96,8 @@ def analyze_frames(frames_folder, annotated_folder="annotated", cascade_path=Non
     return results
 
 
-def process_video(video_path, step=30, work_dir="work"):
-    """High-level helper: extract frames, analyze them, and write a results.json.
+def process_video(video_path, step=30, work_dir="work", transcribe_audio=True):
+    """High-level helper: extract frames, analyze them, transcribe audio, and evaluate candidate.
 
     Returns path to results JSON and dict of results.
     """
@@ -70,8 +105,59 @@ def process_video(video_path, step=30, work_dir="work"):
     frames_dir = os.path.join(work_dir, "frames")
     annotated_dir = os.path.join(work_dir, "annotated")
 
+    # Extract frames and analyze
     _, frames_out = extract_frames(video_path, out_folder=frames_dir, step=step)
-    results = analyze_frames(frames_out, annotated_folder=annotated_dir)
+    frame_results = analyze_frames(frames_out, annotated_folder=annotated_dir)
+    
+    # Initialize results dict
+    results = {
+        "frame_analysis": frame_results,
+        "transcription": None,
+        "evaluation": None,
+        "facial_expression_analysis": None
+    }
+    
+    # Analyze facial expressions for interview parameters
+    if FACIAL_ANALYSIS_AVAILABLE:
+        try:
+            print("Analyzing facial expressions...")
+            analyzer = facial_expression_analyzer.FacialExpressionAnalyzer()
+            facial_analysis = analyzer.analyze_video_frames(frames_out)
+            results["facial_expression_analysis"] = facial_analysis
+        except Exception as e:
+            import traceback
+            error_details = traceback.format_exc()
+            print(f"Warning: Facial expression analysis failed: {e}")
+            print(f"Error details: {error_details}")
+            results["facial_analysis_error"] = str(e)
+            # Don't fail the entire video processing if facial analysis fails
+            results["facial_expression_analysis"] = None
+    
+    # Transcribe audio and evaluate candidate
+    if transcribe_audio:
+        if not TRANSCRIPTION_AVAILABLE:
+            results["transcription_error"] = "Transcription dependencies not installed. Please install: pip install openai-whisper ffmpeg-python torch"
+            results["evaluation_error"] = "Evaluation requires transcription"
+        else:
+            try:
+                print("Transcribing audio from video...")
+                transcriber = audio_transcriber.AudioTranscriber(model_size="base")
+                transcription = transcriber.transcribe(video_path)
+                results["transcription"] = transcription
+                
+                # Evaluate candidate based on transcribed text
+                if transcription.get("text"):
+                    print("Evaluating candidate...")
+                    evaluator = candidate_evaluator.CandidateEvaluator()
+                    evaluation = evaluator.evaluate(transcription["text"])
+                    results["evaluation"] = evaluation
+            except Exception as e:
+                import traceback
+                error_details = traceback.format_exc()
+                print(f"Warning: Transcription/evaluation failed: {e}")
+                print(f"Error details: {error_details}")
+                results["transcription_error"] = str(e)
+                results["evaluation_error"] = str(e)
 
     results_path = os.path.join(work_dir, "results.json")
     with open(results_path, "w") as f:

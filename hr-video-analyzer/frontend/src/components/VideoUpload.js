@@ -48,17 +48,26 @@ const VideoUpload = ({ onUploadSuccess, onUploadError, onLoading, loading }) => 
     } catch (err) {
       // Extract detailed error message from response
       let errorMessage = 'Upload failed';
-      if (err.response?.data) {
+      
+      // Network errors (backend not running, connection refused, etc.)
+      if (err.code === 'ECONNREFUSED' || err.code === 'ERR_NETWORK' || err.message?.includes('Network Error')) {
+        errorMessage = 'Cannot connect to server. Please ensure the backend server is running on http://localhost:8000';
+      } else if (err.response?.data) {
+        // Server responded with error
         if (err.response.data.message) {
           errorMessage = err.response.data.message;
         } else if (err.response.data.error) {
           errorMessage = err.response.data.error;
         } else if (err.response.data.detail) {
           errorMessage = err.response.data.detail;
+        } else if (err.response.status === 500) {
+          errorMessage = 'Server error (500). Check server logs for details.';
         }
       } else if (err.message) {
         errorMessage = err.message;
       }
+      
+      console.error('Upload error:', err);
       onUploadError(new Error(errorMessage));
     } finally {
       onLoading(false);

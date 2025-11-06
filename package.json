@@ -1,0 +1,21 @@
+{
+  "name": "agileanalysts",
+  "version": "1.0.0",
+  "description": "This repo contains our Hack the Clock submission focused on AI for Workforce &amp; HR. We analyze micro facial expressions, voice pitch, and tone to decode non-verbal cues, enhancing candidate profiling and empowering smarter HR decisions with integrated AI-driven insights. Demo included.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/arpnnn1/AgileAnalysts.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/arpnnn1/AgileAnalysts/issues"
+  },
+  "homepage": "https://github.com/arpnnn1/AgileAnalysts#readme"
+}
