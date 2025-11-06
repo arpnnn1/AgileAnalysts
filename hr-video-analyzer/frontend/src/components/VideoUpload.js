@@ -46,7 +46,19 @@ const VideoUpload = ({ onUploadSuccess, onUploadError, onLoading, loading }) => 
       );
       onUploadSuccess(response.data);
     } catch (err) {
-      const errorMessage = err.response?.data?.detail || err.message || 'Upload failed';
+      // Extract detailed error message from response
+      let errorMessage = 'Upload failed';
+      if (err.response?.data) {
+        if (err.response.data.message) {
+          errorMessage = err.response.data.message;
+        } else if (err.response.data.error) {
+          errorMessage = err.response.data.error;
+        } else if (err.response.data.detail) {
+          errorMessage = err.response.data.detail;
+        }
+      } else if (err.message) {
+        errorMessage = err.message;
+      }
       onUploadError(new Error(errorMessage));
     } finally {
       onLoading(false);
@@ -58,7 +70,7 @@ const VideoUpload = ({ onUploadSuccess, onUploadError, onLoading, loading }) => 
       <form onSubmit={handleSubmit} className="upload-form">
         <div className="form-group">
           <label htmlFor="fileInput" className="file-label">
-            <span className="file-label-text">Select Video File</span>
+            <span className="file-label-text">Select Interview Video</span>
             <input
               type="file"
               id="fileInput"
@@ -90,7 +102,7 @@ const VideoUpload = ({ onUploadSuccess, onUploadError, onLoading, loading }) => 
             />
           </label>
           <small className="step-hint">
-            Extract every Nth frame (lower = more frames, slower processing)
+            Extract every Nth frame (lower = more frames, slower processing). Audio will be transcribed automatically.
           </small>
         </div>
 
@@ -99,7 +111,7 @@ const VideoUpload = ({ onUploadSuccess, onUploadError, onLoading, loading }) => 
           disabled={!selectedFile || loading}
           className="upload-button"
         >
-          {loading ? 'Processing...' : 'Upload & Analyze'}
+          {loading ? 'Processing Video & Transcribing Audio...' : 'Upload & Analyze Interview'}
         </button>
       </form>
     </div>

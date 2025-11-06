@@ -21,17 +21,17 @@
 }
 
 .results-link {
-  color: #667eea;
+  color: #6A0DAD;
   text-decoration: none;
   font-weight: 600;
   padding: 8px 16px;
-  border: 2px solid #667eea;
+  border: 2px solid #6A0DAD;
   border-radius: 6px;
   transition: all 0.3s ease;
 }
 
 .results-link:hover {
-  background: #667eea;
+  background: #6A0DAD;
   color: white;
 }
 
@@ -43,12 +43,12 @@
 }
 
 .stat-card {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #6A0DAD 0%, #4B0082 100%);
   color: white;
   padding: 25px;
   border-radius: 10px;
   text-align: center;
-  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+  box-shadow: 0 4px 15px rgba(106, 13, 173, 0.3);
 }
 
 .stat-value {
@@ -94,8 +94,8 @@
 }
 
 .frame-item.selected {
-  border-color: #667eea;
-  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+  border-color: #6A0DAD;
+  box-shadow: 0 8px 25px rgba(106, 13, 173, 0.4);
 }
 
 .frame-image {
@@ -130,7 +130,7 @@
 }
 
 .face-count {
-  background: rgba(102, 126, 234, 0.9);
+  background: rgba(106, 13, 173, 0.9);
   padding: 4px 10px;
   border-radius: 12px;
   font-size: 0.85rem;

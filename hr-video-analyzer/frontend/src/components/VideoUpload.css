@@ -24,7 +24,7 @@
   align-items: center;
   justify-content: center;
   padding: 40px 20px;
-  border: 3px dashed #667eea;
+  border: 3px dashed #6A0DAD;
   border-radius: 8px;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -32,13 +32,13 @@
 }
 
 .file-label:hover {
-  border-color: #764ba2;
+  border-color: #4B0082;
   background: #f0f2ff;
 }
 
 .file-label-text {
   font-size: 1.1rem;
-  color: #667eea;
+  color: #6A0DAD;
   font-weight: 600;
   margin-bottom: 10px;
 }
@@ -80,7 +80,7 @@
 
 .step-input:focus {
   outline: none;
-  border-color: #667eea;
+  border-color: #6A0DAD;
 }
 
 .step-input:disabled {
@@ -96,7 +96,7 @@
 
 .upload-button {
   padding: 15px 30px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #6A0DAD 0%, #4B0082 100%);
   color: white;
   border: none;
   border-radius: 8px;
@@ -104,12 +104,12 @@
   font-weight: 600;
   cursor: pointer;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
-  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+  box-shadow: 0 4px 15px rgba(106, 13, 173, 0.4);
 }
 
 .upload-button:hover:not(:disabled) {
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+  box-shadow: 0 6px 20px rgba(106, 13, 173, 0.6);
 }
 
 .upload-button:active:not(:disabled) {

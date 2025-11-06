@@ -4,43 +4,45 @@ import VideoUpload from './components/VideoUpload';
 import ResultsDisplay from './components/ResultsDisplay';
 
 function App() {
-  const [results, setResults] = useState(null);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+  // Video analysis state
+  const [videoResults, setVideoResults] = useState(null);
+  const [videoLoading, setVideoLoading] = useState(false);
+  const [videoError, setVideoError] = useState(null);
 
+  // Video handlers
   const handleUploadSuccess = (data) => {
-    setResults(data);
-    setError(null);
+    setVideoResults(data);
+    setVideoError(null);
   };
 
   const handleUploadError = (err) => {
-    setError(err.message || 'An error occurred during upload');
-    setResults(null);
+    setVideoError(err.message || 'An error occurred during upload');
+    setVideoResults(null);
   };
 
-  const handleLoading = (isLoading) => {
-    setLoading(isLoading);
+  const handleVideoLoading = (isLoading) => {
+    setVideoLoading(isLoading);
   };
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <h1>HR Video Analyzer</h1>
-        <p>Upload a video to run face detection and analysis</p>
+    <div className="App" style={{ position: 'relative', zIndex: 1 }}>
+      <header className="App-header" style={{ position: 'relative', zIndex: 2 }}>
+        <h1>HR Interview Analytics Platform</h1>
+        <p>Video Analysis, Transcription & Candidate Evaluation</p>
       </header>
       <main className="App-main">
         <VideoUpload
           onUploadSuccess={handleUploadSuccess}
           onUploadError={handleUploadError}
-          onLoading={handleLoading}
-          loading={loading}
+          onLoading={handleVideoLoading}
+          loading={videoLoading}
         />
-        {error && (
+        {videoError && (
           <div className="error-message">
-            <p>Error: {error}</p>
+            <p>Error: {videoError}</p>
           </div>
         )}
-        {results && <ResultsDisplay results={results} />}
+        {videoResults && <ResultsDisplay results={videoResults} />}
       </main>
     </div>
   );

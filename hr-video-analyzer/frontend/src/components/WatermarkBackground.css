@@ -1,0 +1,133 @@
+/* AI Watermark Background Pattern */
+.ai-watermark-background {
+  position: relative;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #6A0DAD 0%, #4B0082 100%);
+  overflow: hidden;
+}
+
+.ai-watermark-background::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.08;
+  background-image: 
+    /* Neural Network Nodes */
+    radial-gradient(circle at 10% 20%, rgba(255, 255, 255, 0.3) 1px, transparent 1px),
+    radial-gradient(circle at 30% 40%, rgba(255, 255, 255, 0.3) 1px, transparent 1px),
+    radial-gradient(circle at 50% 60%, rgba(255, 255, 255, 0.3) 1px, transparent 1px),
+    radial-gradient(circle at 70% 30%, rgba(255, 255, 255, 0.3) 1px, transparent 1px),
+    radial-gradient(circle at 90% 50%, rgba(255, 255, 255, 0.3) 1px, transparent 1px),
+    radial-gradient(circle at 20% 80%, rgba(255, 255, 255, 0.3) 1px, transparent 1px),
+    radial-gradient(circle at 40% 10%, rgba(255, 255, 255, 0.3) 1px, transparent 1px),
+    radial-gradient(circle at 60% 90%, rgba(255, 255, 255, 0.3) 1px, transparent 1px),
+    radial-gradient(circle at 80% 70%, rgba(255, 255, 255, 0.3) 1px, transparent 1px),
+    /* Circuit Lines */
+    linear-gradient(45deg, transparent 48%, rgba(255, 255, 255, 0.2) 49%, rgba(255, 255, 255, 0.2) 51%, transparent 52%),
+    linear-gradient(-45deg, transparent 48%, rgba(255, 255, 255, 0.2) 49%, rgba(255, 255, 255, 0.2) 51%, transparent 52%);
+  background-size: 
+    200px 200px,
+    200px 200px,
+    200px 200px,
+    200px 200px,
+    200px 200px,
+    200px 200px,
+    200px 200px,
+    200px 200px,
+    200px 200px,
+    100px 100px,
+    100px 100px;
+  background-position: 
+    0 0,
+    50px 50px,
+    100px 100px,
+    150px 150px,
+    200px 200px,
+    250px 250px,
+    300px 300px,
+    350px 350px,
+    400px 400px,
+    0 0,
+    50px 50px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.ai-watermark-background::after {
+  content: '🤖 ⚡ 🧠 🔬 💡 🎯 📊 🔍 🌐';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.06;
+  font-size: 8rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 200px;
+  padding: 100px;
+  pointer-events: none;
+  z-index: 0;
+  line-height: 1.2;
+  letter-spacing: 150px;
+  transform: rotate(-5deg);
+  animation: float 20s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: rotate(-5deg) translateY(0);
+  }
+  50% {
+    transform: rotate(-3deg) translateY(-20px);
+  }
+}
+
+/* AI Symbol Pattern Overlay */
+.ai-symbols-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.05;
+  background-image: 
+    /* Binary Code Pattern */
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(255, 255, 255, 0.1) 2px,
+      rgba(255, 255, 255, 0.1) 4px
+    ),
+    /* Hexagonal Pattern (AI/ML inspired) */
+    repeating-linear-gradient(
+      60deg,
+      transparent,
+      transparent 1px,
+      rgba(255, 255, 255, 0.05) 1px,
+      rgba(255, 255, 255, 0.05) 2px
+    ),
+    repeating-linear-gradient(
+      -60deg,
+      transparent,
+      transparent 1px,
+      rgba(255, 255, 255, 0.05) 1px,
+      rgba(255, 255, 255, 0.05) 2px
+    );
+  background-size: 20px 20px, 30px 30px, 30px 30px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Ensure content is above watermarks */
+.ai-watermark-background > * {
+  position: relative;
+  z-index: 1;
+}
+

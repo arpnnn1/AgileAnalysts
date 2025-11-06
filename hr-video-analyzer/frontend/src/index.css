@@ -10,8 +10,130 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   min-height: 100vh;
+  position: relative;
+}
+
+/* AI Watermark Pattern */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.08;
+  background-image: 
+    /* Neural Network Nodes */
+    radial-gradient(circle at 10% 20%, rgba(255, 255, 255, 0.4) 2px, transparent 2px),
+    radial-gradient(circle at 30% 40%, rgba(255, 255, 255, 0.4) 2px, transparent 2px),
+    radial-gradient(circle at 50% 60%, rgba(255, 255, 255, 0.4) 2px, transparent 2px),
+    radial-gradient(circle at 70% 30%, rgba(255, 255, 255, 0.4) 2px, transparent 2px),
+    radial-gradient(circle at 90% 50%, rgba(255, 255, 255, 0.4) 2px, transparent 2px),
+    radial-gradient(circle at 20% 80%, rgba(255, 255, 255, 0.4) 2px, transparent 2px),
+    radial-gradient(circle at 40% 10%, rgba(255, 255, 255, 0.4) 2px, transparent 2px),
+    radial-gradient(circle at 60% 90%, rgba(255, 255, 255, 0.4) 2px, transparent 2px),
+    radial-gradient(circle at 80% 70%, rgba(255, 255, 255, 0.4) 2px, transparent 2px),
+    /* Circuit Lines */
+    linear-gradient(45deg, transparent 48%, rgba(255, 255, 255, 0.25) 49%, rgba(255, 255, 255, 0.25) 51%, transparent 52%),
+    linear-gradient(-45deg, transparent 48%, rgba(255, 255, 255, 0.25) 49%, rgba(255, 255, 255, 0.25) 51%, transparent 52%);
+  background-size: 
+    300px 300px,
+    300px 300px,
+    300px 300px,
+    300px 300px,
+    300px 300px,
+    300px 300px,
+    300px 300px,
+    300px 300px,
+    300px 300px,
+    150px 150px,
+    150px 150px;
+  background-position: 
+    0 0,
+    100px 100px,
+    200px 200px,
+    300px 300px,
+    400px 400px,
+    500px 500px,
+    600px 600px,
+    700px 700px,
+    800px 800px,
+    0 0,
+    75px 75px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+body::after {
+  content: '🤖 ⚡ 🧠 🔬 💡 🎯 📊 🔍 🌐';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.06;
+  font-size: 10rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 300px;
+  padding: 150px;
+  pointer-events: none;
+  z-index: 0;
+  line-height: 1.2;
+  letter-spacing: 200px;
+  transform: rotate(-5deg);
+  animation: floatWatermark 25s ease-in-out infinite;
+  white-space: nowrap;
+}
+
+@keyframes floatWatermark {
+  0%, 100% {
+    transform: rotate(-5deg) translateY(0) translateX(0);
+  }
+  25% {
+    transform: rotate(-3deg) translateY(-30px) translateX(20px);
+  }
+  50% {
+    transform: rotate(-7deg) translateY(-20px) translateX(-20px);
+  }
+  75% {
+    transform: rotate(-4deg) translateY(-40px) translateX(10px);
+  }
+}
+
+/* Binary Code Pattern Overlay */
+body {
+  background-image: 
+    /* Binary Code Pattern */
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 3px,
+      rgba(255, 255, 255, 0.08) 3px,
+      rgba(255, 255, 255, 0.08) 6px
+    ),
+    /* Hexagonal Pattern (AI/ML inspired) */
+    repeating-linear-gradient(
+      60deg,
+      transparent,
+      transparent 2px,
+      rgba(255, 255, 255, 0.06) 2px,
+      rgba(255, 255, 255, 0.06) 4px
+    ),
+    repeating-linear-gradient(
+      -60deg,
+      transparent,
+      transparent 2px,
+      rgba(255, 255, 255, 0.06) 2px,
+      rgba(255, 255, 255, 0.06) 4px
+    ),
+    /* Main gradient */
+    linear-gradient(135deg, #6A0DAD 0%, #4B0082 100%);
+  background-size: 25px 25px, 40px 40px, 40px 40px, 100% 100%;
+  background-position: 0 0, 0 0, 0 0, 0 0;
 }
 
 code {

@@ -1,12 +1,24 @@
 import React, { useState } from 'react';
 import './ResultsDisplay.css';
+import CandidateEvaluation from './CandidateEvaluation';
 
 const ResultsDisplay = ({ results }) => {
   const [selectedFrame, setSelectedFrame] = useState(null);
 
   if (!results) return null;
 
-  const { annotated_frames = [], results: analysisResults = {}, results_file, uploaded_file } = results;
+  const { 
+    annotated_frames = [], 
+    results: analysisResults = {}, 
+    frame_analysis = {},
+    transcription,
+    evaluation,
+    results_file, 
+    uploaded_file 
+  } = results;
+  
+  // Use frame_analysis if available, otherwise fall back to results
+  const frameResults = Object.keys(frame_analysis).length > 0 ? frame_analysis : analysisResults;
 
   return (
     <div className="results-container">
@@ -26,13 +38,13 @@ const ResultsDisplay = ({ results }) => {
         </div>
         <div className="stat-card">
           <div className="stat-value">
-            {Object.values(analysisResults).reduce((sum, faces) => sum + faces.length, 0)}
+            {Object.values(frameResults).reduce((sum, faces) => sum + faces.length, 0)}
           </div>
           <div className="stat-label">Total Faces Detected</div>
         </div>
         <div className="stat-card">
           <div className="stat-value">
-            {Object.values(analysisResults).filter(faces => faces.length > 0).length}
+            {Object.values(frameResults).filter(faces => faces.length > 0).length}
           </div>
           <div className="stat-label">Frames with Faces</div>
         </div>
@@ -45,7 +57,7 @@ const ResultsDisplay = ({ results }) => {
             {annotated_frames.map((frameUrl, index) => {
               const frameName = frameUrl.split('/').pop();
               const frameKey = frameName.replace('annot_', '').replace('.jpg', '');
-              const faces = analysisResults[frameKey] || [];
+              const faces = frameResults[frameKey] || [];
               
               return (
                 <div
@@ -85,6 +97,15 @@ const ResultsDisplay = ({ results }) => {
             })}
           </div>
         </div>
+      )}
+
+      {/* Candidate Evaluation Section */}
+      {(evaluation || transcription || results.facial_expression_analysis) && (
+        <CandidateEvaluation 
+          evaluation={evaluation} 
+          transcription={transcription}
+          facialExpressionAnalysis={results.facial_expression_analysis}
+        />
       )}
 
       {uploaded_file && (
