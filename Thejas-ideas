@@ -50,3 +50,19 @@ Position yours as the "ethical, transparent alternative"
 
 Your advantage: Big companies move slowly and have legacy code. You can build something modern, ethical, and developer-friendly in hours!
 
+git pwd
+# should be /Users/thejasvk/Downloads/Stevens-Sem-3/AgileAnalysts
+git status
+git pull --rebase origin main
+git add .gitignore
+git add hr-video-analyzer/video_processor.py hr-video-analyzer/app.py hr-video-analyzer/requirements.txt hr-video-analyzer/static/index.html
+git diff --staged --name-only
+git commit -m "Add video processing pipeline, FastAPI UI, and .gitignore"
+git push origin main
+
+
+lsof -nP -iTCP:8000 -sTCP:LISTEN
+lsof -nP -iTCP:8000 -sTCP:LISTEN || echo "port 8000 is free"
+uvicorn app:app --reload --host 0.0.0.0 --port 8001
+uvicorn app:app --reload --host 0.0.0.0 --port 8000
+
