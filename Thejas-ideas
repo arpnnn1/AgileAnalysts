@@ -1,3 +1,12 @@
+hr-video-analyzer/
+├── app.py                 # Main Gradio interface
+├── video_processor.py     # Frame/audio extraction
+├── face_analyzer.py       # Facial emotion analysis
+├── voice_analyzer.py      # Voice pitch/tone analysis
+├── frames/                # Temporary frame storage
+└── requirements.txt       # Dependencies
+
+
 Potential Unique Approaches:
 1. Career Coach Focus (Not Just Hiring)
 Analyze interviews to help candidates improve
