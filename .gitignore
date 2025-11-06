@@ -55,5 +55,22 @@ pip-delete-this-directory.txt
 /hr-video-analyzer/uploads/
 /hr-video-analyzer/work/
 
+# React frontend
+/hr-video-analyzer/frontend/node_modules/
+/hr-video-analyzer/frontend/build/
+/hr-video-analyzer/frontend/.env.local
+/hr-video-analyzer/frontend/.env.development.local
+/hr-video-analyzer/frontend/.env.test.local
+/hr-video-analyzer/frontend/.env.production.local
+/hr-video-analyzer/frontend/npm-debug.log*
+/hr-video-analyzer/frontend/yarn-debug.log*
+/hr-video-analyzer/frontend/yarn-error.log*
+
 # Uvicorn reload files
 *.pid
+
+# Video files (optional - uncomment if you don't want to track video files)
+# *.mov
+# *.mp4
+# *.avi
+# *.mkv
