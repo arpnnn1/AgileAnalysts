@@ -1,0 +1,54 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>HR Video Analyzer - Upload</title>
+    <style>
+      body { font-family: Arial, sans-serif; max-width: 720px; margin: 40px auto; }
+      input[type=file] { display:block; margin-bottom: 12px; }
+      img { max-width: 100%; }
+    </style>
+  </head>
+  <body>
+    <h1>HR Video Analyzer</h1>
+    <p>Upload a video to run face detection. Results will be returned as JSON including links to annotated frames.</p>
+    <form id="uploadForm">
+      <input type="file" id="fileInput" name="file" accept="video/*" required />
+      <label>Extract step (frames): <input type="number" id="step" name="step" value="30" min="1"/></label>
+      <button type="submit">Upload & Analyze</button>
+    </form>
+
+    <pre id="output" style="white-space:pre-wrap; background:#f4f4f4; padding:12px; margin-top:16px;"></pre>
+    <div id="images"></div>
+
+    <script>
+      const form = document.getElementById('uploadForm');
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const fileInput = document.getElementById('fileInput');
+        const step = document.getElementById('step').value || 30;
+        if (!fileInput.files.length) return alert('Choose a file first');
+        const fd = new FormData();
+        fd.append('file', fileInput.files[0]);
+        const out = document.getElementById('output');
+        out.textContent = 'Uploading...';
+        try {
+          const res = await fetch(`/upload/?step=${step}`, { method: 'POST', body: fd });
+          const json = await res.json();
+          out.textContent = JSON.stringify(json, null, 2);
+          const imagesDiv = document.getElementById('images');
+          imagesDiv.innerHTML = '';
+          if (json.annotated_frames && json.annotated_frames.length) {
+            json.annotated_frames.forEach(url => {
+              const img = document.createElement('img');
+              img.src = url;
+              imagesDiv.appendChild(img);
+            });
+          }
+        } catch (err) {
+          out.textContent = 'Error: ' + err;
+        }
+      });
+    </script>
+  </body>
+</html>
